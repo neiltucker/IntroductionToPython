@@ -1,2 +1,2 @@
 # IntroductionToPython
-Additional Scripts for Introduction To Python
+Additional Scripts for Introduction To Python class
