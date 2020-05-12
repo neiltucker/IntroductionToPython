@@ -2,15 +2,17 @@
 import glob, pandas as pd
 
 allfiles = glob.glob("*.tbl")
-columns = ['EmployeeID','LastName','FirstName','HireDate','Salary']
+columns = ['EmployeeID','LastName','FirstName','HireDate','Salary','FullName']
 alldata = pd.DataFrame(columns=columns)
 
 for file in allfiles:
-   data = pd.read_csv(file, index_col = None, names = columns, header = 0)
+   names = ['EmployeeID','LastName','FirstName','HireDate','Salary']
+   data = pd.read_csv(file, index_col = None, names = names, header = 0)
+   data['FullName'] = data['LastName'] + "; " + data['FirstName'] 
    alldata = alldata.append(data)
 
 
-alldata.to_csv('allemployees.csv',index=False,header=["EmployeeID","LastName","FirstName","HireDate","Salary"])
+alldata.to_csv('allemployees.csv',index=False,header=["CompanyID","LastName","FirstName","HireDate","Salary","FullName"])
 
 
 
