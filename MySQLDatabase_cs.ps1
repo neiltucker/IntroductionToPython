@@ -13,10 +13,10 @@ $PW = Write-Output $Password | ConvertTo-SecureString -AsPlainText -Force       
 $SQLCredentials =  (New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $SQLLogin1, $PW)
 $Location = "EASTUS"
 $DataLocation = "EASTUS"   				        	   # Verify that this location supports the creation of MySQL Server objects
-$NamePrefix = "in" + (Get-Date -Format "HHmmss")       # Replace "in" with your initials.  Date information is added in this example to help make the names unique
+$NamePrefix = "sql" + (Get-Date -Format "HHmmss")       # Replace "in" with your initials.  Date information is added in this example to help make the names unique
 $ResourceGroupName = $NamePrefix.ToLower() + "rg"
 $StorageAccountName = $NamePrefix.ToLower() + "sa"     # Must be lower case
-$MySQLServerName = 'ms' + $NamePrefix
+$MySQLServerName = 'my' + $NamePrefix
 $MySQLServerFQDN = $MySQLServerName + '.mysql.database.azure.com'
 $DefaultDatabase= 'mysql'
 $MySQLDB = 'mysqldb1'
@@ -53,7 +53,7 @@ Get-ChildItem -File $WorkFolder"employees.*" | Set-AzureStorageBlobContent -Cont
 
 ### Create MySQL Server and Database (We will use Azure CLI for this part of the lab)
 # az extension add --name rdbms          # This option is sometimes required for MySQL commands to work.  Ignore any error messages it may generate and continue.
-$MySQLServerInstance = az mysql server create -n $MySQLServerName -g $ResourceGroupName -l $DataLocation  -u $SQLLogin1 -p $Password --ssl-enforcement Enabled --sku-name "GP_GEN5_2" # (The --sku-name parameter is sometimes required for setting up the server.  If the command fails, try disabling that parameter.)
+$MySQLServerInstance = az mysql server create -n $MySQLServerName -g $ResourceGroupName -l $DataLocation  -u $SQLLogin1 -p $Password --ssl-enforcement Disabled --sku-name "GP_GEN5_2" # (The --sku-name parameter is sometimes required for setting up the server.  If the command fails, try disabling that parameter.)
 az mysql server list --resource-group $ResourceGroupName --output table
 az mysql db list -g $ResourceGroupName -s $MySQLServerName | ConvertFrom-Json | Format-Table Name, ResourceGroup, Type
 
