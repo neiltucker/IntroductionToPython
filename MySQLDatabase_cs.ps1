@@ -61,6 +61,9 @@ az mysql db list -g $ResourceGroupName -s $MySQLServerName | ConvertFrom-Json | 
 az mysql server firewall-rule create -s $MySQLServerName -g $ResourceGroupName -n "ClientIP1" --start-ip-address $ExternalIP --end-ip-address $ExternalIP
 az mysql server firewall-rule create -s $MySQLServerName -g $ResourceGroupName -n "AllowAllWindowsAzureIps" --start-ip-address 0.0.0.0 --end-ip-address 0.0.0.0
 
+### Create MySQL Database
+az mysql db create -g $ResourceGroupName -s $MySQLServerName -n $MySQLDB
+
 ### Install MySQL Python Connector  (Not needed for lab exercise but useful for Python developers.  Might require a virtual environment (virtualenv).)
 # pip install mysql-connector
 
